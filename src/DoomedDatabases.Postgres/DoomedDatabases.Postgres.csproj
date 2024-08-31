@@ -7,14 +7,16 @@
     <PackageId>VILLAN3LL3.DoomedDatabases.Postgres</PackageId>
     <Desciption>Dynamically create Postgres databases for testing (forked from https://github.com/uhaciogullari/doomed-databases)</Desciption>
     <RepositoryUrl>https://github.com/VILLAN3LL3/doomed-databases</RepositoryUrl>
-    <PackageLicense>https://github.com/VILLAN3LL3/doomed-databases#MIT-1-ov-file</PackageLicense>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/VILLAN3LL3/doomed-databases</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <None Include="../README.md" Pack="true" PackagePath="\"/>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Npgsql" Version="8.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
