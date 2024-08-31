@@ -2,6 +2,11 @@ name: Nuget
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "New version for the project"
+        required: true 
+        type: string
 
 jobs:
   nuget:
