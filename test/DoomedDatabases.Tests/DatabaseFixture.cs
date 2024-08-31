@@ -12,7 +12,7 @@ namespace DoomedDatabases.Tests
         public DatabaseFixture()
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            TestDatabase = new TestDatabaseBuilder().WithConfiguration(configuration).WithTemplateDatabase("uuid_extension_enabled").Build();
+            TestDatabase = new TestDatabaseBuilder().WithConfiguration(configuration).Build();
             TestDatabase.Create();
 
             var builder = new DbContextOptionsBuilder<TestDbContext>();

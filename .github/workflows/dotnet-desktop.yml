@@ -47,14 +47,10 @@ on:
 jobs:
 
   build:
-
     strategy:
       matrix:
         configuration: [Debug, Release]
-
-    runs-on: windows-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
-
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -72,5 +68,31 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore --configuration Release
-    - name: Test
-      run: dotnet test ./test/DoomedDatabases.Tests/DoomedDatabases.Tests.csproj
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: integration_test_user
+          POSTGRES_PASSWORD: 432423ff
+          POSTGRES_DB: postgres
+        ports: 
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U integration_test_user"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+  
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Run tests
+        run: dotnet test ./test/DoomedDatabases.Tests/DoomedDatabases.Tests.csproj
